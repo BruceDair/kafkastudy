@@ -12,7 +12,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 
 public class KafkaProducerCase {
 	/**
-	 * Éú³ÉÕß
+	 * ç”Ÿæˆè€…
 	 */
 	private static Producer<String, String> producer;
 	
@@ -22,12 +22,12 @@ public class KafkaProducerCase {
 	private final static String topic = "test4";
 	
 	/**
-	 * ²¢·¢ÊıÁ¿
+	 * å¹¶å‘æ•°é‡
 	 */
 	private final static int num = 50000;
 	
 	/**
-	 * ipµØÖ·ºÍ¶Ë¿Ú
+	 * ipåœ°å€å’Œç«¯å£
 	 */
 	private final static String ipAndPort = "192.168.95.73:9092";
 	
@@ -46,9 +46,9 @@ public class KafkaProducerCase {
          KafkaProducerCase a = new KafkaProducerCase();
 		 int i=0;
 		 while(i<num){
-			 Thread t = new Thread(a.new ProducerThread(i));
-			 t.start();
-//			 a.new ProducerThread(i).run();
+//			 Thread t = new Thread(a.new ProducerThread(i));
+//			 t.start();
+			 a.new ProducerThread(i).run();
 			 i++;
 		 }
 		 producer.close();
@@ -56,7 +56,7 @@ public class KafkaProducerCase {
 	}
 	
 	/**
-	 * Éú³ÉÕßÏß³Ì
+	 * ç”Ÿæˆè€…çº¿ç¨‹
 	 * @author daihongchang
 	 *
 	 */

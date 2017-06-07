@@ -17,7 +17,7 @@ public class ConsumerRunable implements Runnable{
 	 
 	 private JdbcTemplate jdbcTemplate;
 	 /**
-	 * ipµØÖ·ºÍ¶Ë¿Ú
+	 * ipåœ°å€å’Œç«¯å£
 	 */
 	 private final static String ipAndPort = "192.168.95.73:9092";
 	 
@@ -27,13 +27,13 @@ public class ConsumerRunable implements Runnable{
 	 public ConsumerRunable() {
 		//DataSource ds = new DriverManagerDataSource("jdbc:mysql://192.168.95.70:3306/chigoo", "root", "beyondsoft");
 		 
-		 // ´´½¨Êı¾İÔ´£¨Á¬½Ó³Ø£©dbcp
+		 // åˆ›å»ºæ•°æ®æºï¼ˆè¿æ¥æ± ï¼‰dbcp
 		
 	    BasicDataSource basicDataSource = new BasicDataSource();
 	
-	    // dbpcpÊı¾İÔ´µÄ»ù±¾ÅäÖÃ
-	    basicDataSource.setDriverClassName("com.mysql.jdbc.Driver"); // ¼ÓÔØÇı¶¯
-	    basicDataSource.setUrl("jdbc:mysql://192.168.95.70:3306/chigoo");  // Êı¾İ¿âµÄ
+	    // dbpcpæ•°æ®æºçš„åŸºæœ¬é…ç½®
+	    basicDataSource.setDriverClassName("com.mysql.jdbc.Driver"); // åŠ è½½é©±åŠ¨
+	    basicDataSource.setUrl("jdbc:mysql://192.168.95.70:3306/chigoo");  // æ•°æ®åº“çš„
 	    basicDataSource.setUsername("root");
 	    basicDataSource.setPassword("beyondsoft");
 		jdbcTemplate = new JdbcTemplate(basicDataSource);
@@ -53,7 +53,7 @@ public class ConsumerRunable implements Runnable{
 	public void run() {
 		while(true){
 			ConsumerRecords<String, String> records = consumer.poll(1000);
-            //½«consumer»ñÈ¡µÄÊı¾İ£¬²åÈëÊı¾İ¿âÖĞ
+            //å°†consumerè·å–çš„æ•°æ®ï¼Œæ’å…¥æ•°æ®åº“ä¸­
             for (ConsumerRecord<String, String> record : records){
             	
             	String sql = "insert into sample(s_code,s_desc) values ('"+record.key()+"','"+record.value()+"')";
@@ -66,7 +66,7 @@ public class ConsumerRunable implements Runnable{
 
 	public static void main(String[] args) {
 		int i=0;
-		//Ê¹ÓÃ50¸öconsumerÏû·ÑÊı¾İ
+		//ä½¿ç”¨50ä¸ªconsumeræ¶ˆè´¹æ•°æ®
 		while(i<50){
 			Thread t = new Thread(new ConsumerRunable());
 			t.start();
