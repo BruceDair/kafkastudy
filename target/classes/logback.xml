@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	
+    <appender name="CONSOLE-APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="COMMON-DEFAULT-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/common-default.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_PATH}/common-default.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>30</maxHistory>         
+        </rollingPolicy>
+        <encoder>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    
+    <appender name="WEB-REQUEST-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/web-request.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_PATH}/web-request.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>30</maxHistory>         
+        </rollingPolicy>
+        <encoder>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level - %msg %n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    
+    <appender name="DB-EXECUTE-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/db-execute.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_PATH}/db-execute.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>30</maxHistory>         
+        </rollingPolicy>
+        <encoder>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level - %msg %n</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    
+    <logger name="DB-EXECUTE" level="INFO">
+        <appender-ref ref="DB-EXECUTE-APPENDER"/>
+    </logger>
+    
+    <logger name="WEB-REQUEST" level="INFO">
+        <appender-ref ref="WEB-REQUEST-APPENDER"/>
+    </logger>
+    
+    <root level="INFO">
+        <appender-ref ref="COMMON-DEFAULT-APPENDER"/>
+        <appender-ref ref="CONSOLE-APPENDER"/>
+    </root>
+</configuration>
