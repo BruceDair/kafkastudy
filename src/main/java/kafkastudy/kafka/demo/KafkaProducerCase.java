@@ -46,7 +46,9 @@ public class KafkaProducerCase {
          KafkaProducerCase a = new KafkaProducerCase();
 		 int i=0;
 		 while(i<num){
-			 a.new ProducerThread(i).run();
+			 Thread t = new Thread(a.new ProducerThread(i));
+			 t.start();
+//			 a.new ProducerThread(i).run();
 			 i++;
 		 }
 		 producer.close();

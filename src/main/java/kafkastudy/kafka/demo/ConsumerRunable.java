@@ -2,15 +2,11 @@ package kafkastudy.kafka.demo;
 
 import java.util.Arrays;
 import java.util.Properties;
-
-import javax.sql.DataSource;
-
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 public class ConsumerRunable implements Runnable{
 	
@@ -35,7 +31,7 @@ public class ConsumerRunable implements Runnable{
 		
 	    BasicDataSource basicDataSource = new BasicDataSource();
 	
-	    // 基本4项
+	    // dbpcp数据源的基本配置
 	    basicDataSource.setDriverClassName("com.mysql.jdbc.Driver"); // 加载驱动
 	    basicDataSource.setUrl("jdbc:mysql://192.168.95.70:3306/chigoo");  // 数据库的
 	    basicDataSource.setUsername("root");
@@ -57,12 +53,11 @@ public class ConsumerRunable implements Runnable{
 	public void run() {
 		while(true){
 			ConsumerRecords<String, String> records = consumer.poll(1000);
-            //利用
+            //将consumer获取的数据，插入数据库中
             for (ConsumerRecord<String, String> record : records){
             	
             	String sql = "insert into sample(s_code,s_desc) values ('"+record.key()+"','"+record.value()+"')";
             	jdbcTemplate.execute(sql);
-            	//log.info("offset = %d, key = "+ record.offset()+", value = "+record.value()+"\n" );
             	System.out.printf("offset = %d, key = %s, value = %s ,partition=%s,thread = %s\n,", record.offset(), record.key(), record.value(),record.partition(),Thread.currentThread());
             }
 		}
@@ -71,12 +66,11 @@ public class ConsumerRunable implements Runnable{
 
 	public static void main(String[] args) {
 		int i=0;
+		//使用50个consumer消费数据
 		while(i<50){
 			Thread t = new Thread(new ConsumerRunable());
 			t.start();
 			i++;
 		}
-//		Thread t = new Thread(new ConsumerRunable());
-//		t.start();
 	}
 }
