@@ -1,3 +1,0 @@
-[core]
-      ignorecase = true
-      excludesfile = *.log target/      
